@@ -1,0 +1,11 @@
+﻿{
+  "Group": "Payments",
+  "FriendlyName": "D&R Odeme",
+  "SystemName": "Payments.SecondPayment",
+  "Version": "1.00",
+  "SupportedVersions": [ "4.80" ],
+  "Author": "Kagandeniz",
+  "DisplayOrder": 2,
+  "FileName": "Nop.Plugin.Payments.SecondPayment.dll",
+  "Description": "D&R Odeme"
+}

@@ -102,6 +102,10 @@
     {
       "SystemName": "ExternalAuth.Facebook",
       "Version": "4.80.5"
+    },
+    {
+      "SystemName": "Payments.SecondPayment",
+      "Version": "1.00"
     }
   ],
   "PluginNamesToUninstall": [],
