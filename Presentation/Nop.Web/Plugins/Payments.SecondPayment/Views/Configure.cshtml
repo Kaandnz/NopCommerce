@@ -5,21 +5,43 @@
 
 @await Component.InvokeAsync(typeof(StoreScopeConfigurationViewComponent))
 
-<form asp-controller="PaymentManual" asp-action="Configure" method="post">
+<form asp-controller="SecondPayment" asp-action="Configure" method="post">
     <div class="cards-group">
         <div class="card card-default">
             <div class="card-body">
-                <p>@T("Plugins.Payments.Manual.Instructions")</p>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="Iban_OverrideForStore" asp-input="Iban" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="Iban" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="Iban" />
+                        <span asp-validation-for="Iban"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <nop-override-store-checkbox asp-for="QrCodeImageUrl_OverrideForStore" asp-input="QrCodeImageUrl" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
+                        <nop-label asp-for="QrCodeImageUrl" />
+                    </div>
+                    <div class="col-md-9">
+                        <nop-editor asp-for="QrCodeImageUrl" />
+                        <span asp-validation-for="QrCodeImageUrl"></span>
+                    </div>
+                </div>
+
                 <div class="form-group row">
                     <div class="col-md-3">
                         <nop-override-store-checkbox asp-for="TransactModeId_OverrideForStore" asp-input="TransactModeId" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
-                        <nop-label asp-for="TransactModeValues" />
+                        <nop-label asp-for="TransactModeId" />
                     </div>
                     <div class="col-md-9">
                         <nop-select asp-for="TransactModeId" asp-items="Model.TransactModeValues" />
                         <span asp-validation-for="TransactModeId"></span>
                     </div>
                 </div>
+
                 <div class="form-group row">
                     <div class="col-md-3">
                         <nop-override-store-checkbox asp-for="AdditionalFee_OverrideForStore" asp-input="AdditionalFee" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
@@ -30,6 +52,7 @@
                         <span asp-validation-for="AdditionalFee"></span>
                     </div>
                 </div>
+
                 <div class="form-group row">
                     <div class="col-md-3">
                         <nop-override-store-checkbox asp-for="AdditionalFeePercentage_OverrideForStore" asp-input="AdditionalFeePercentage" asp-store-scope="@Model.ActiveStoreScopeConfiguration" />
@@ -40,11 +63,13 @@
                         <span asp-validation-for="AdditionalFeePercentage"></span>
                     </div>
                 </div>
+
                 <div class="form-group row">
                     <div class="col-md-9 offset-md-3">
                         <button type="submit" name="save" class="btn btn-primary">@T("Admin.Common.Save")</button>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>

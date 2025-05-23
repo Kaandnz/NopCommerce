@@ -2,50 +2,90 @@
     Layout = "";
 }
 @model Nop.Plugin.Payments.SecondPayment.Models.PaymentInfoModel
-<table width="100%" cellspacing="2" cellpadding="1" border="0">
-    <tr>
-        <td>
-            <label asp-for="CreditCardTypes">@T("Payment.SelectCreditCard"):</label>
-        </td>
-        <td>
-            <select asp-for="CreditCardType" asp-items="Model.CreditCardTypes" class="dropdownlists"></select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label asp-for="CardholderName">@T("Payment.CardholderName"):</label>
-        </td>
-        <td>
-            <input type="text" asp-for="CardholderName" style="width:165px;" autocomplete="off" />
-            <span asp-validation-for="CardholderName"></span>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label asp-for="CardNumber">@T("Payment.CardNumber"):</label>
-        </td>
-        <td>
-            <input type="text" asp-for="CardNumber" style="width:165px;" autocomplete="off" maxlength="22" />
-            <span asp-validation-for="CardNumber"></span>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label asp-for="ExpireMonth">@T("Payment.ExpirationDate"):</label>
-        </td>
-        <td>
-            <select asp-for="ExpireMonth" asp-items="Model.ExpireMonths"></select>
-            /
-            <select asp-for="ExpireYear" asp-items="Model.ExpireYears"></select>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <label asp-for="CardCode">@T("Payment.CardCode"):</label>
-        </td>
-        <td>
-            <input type="text" asp-for="CardCode" style="width:60px;" autocomplete="off" maxlength="4" />
-            <span asp-validation-for="CardCode"></span>
-        </td>
-    </tr>
-</table>
+
+<div>
+    <label for="PaymentOption">Ödeme Türü:</label>
+    <select name="PaymentOption" id="PaymentOption" required>
+        <option value="">Lütfen seçiniz</option>
+        <option value="CreditCard">Kredi Kartı</option>
+        <option value="QR">QR Kod ile Ödeme</option>
+        <option value="Havale">Banka Havalesi / EFT</option>
+    </select>
+</div>
+
+<hr />
+
+<div id="creditCardSection" style="display:none;">
+    <table width="100%" cellspacing="2" cellpadding="1" border="0">
+        <tr>
+            <td>
+                <label asp-for="CreditCardTypes">@T("Payment.SelectCreditCard"):</label>
+            </td>
+            <td>
+                <select asp-for="CreditCardType" asp-items="Model.CreditCardTypes" class="dropdownlists"></select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="CardholderName">@T("Payment.CardholderName"):</label>
+            </td>
+            <td>
+                <input type="text" asp-for="CardholderName" style="width:165px;" autocomplete="off" />
+                <span asp-validation-for="CardholderName"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="CardNumber">@T("Payment.CardNumber"):</label>
+            </td>
+            <td>
+                <input type="text" asp-for="CardNumber" style="width:165px;" autocomplete="off" maxlength="22" />
+                <span asp-validation-for="CardNumber"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="ExpireMonth">@T("Payment.ExpirationDate"):</label>
+            </td>
+            <td>
+                <select asp-for="ExpireMonth" asp-items="Model.ExpireMonths"></select>
+                /
+                <select asp-for="ExpireYear" asp-items="Model.ExpireYears"></select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label asp-for="CardCode">@T("Payment.CardCode"):</label>
+            </td>
+            <td>
+                <input type="text" asp-for="CardCode" style="width:60px;" autocomplete="off" maxlength="4" />
+                <span asp-validation-for="CardCode"></span>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div id="qrSection" style="display:none; margin-top: 20px;">
+    <p>Lütfen aşağıdaki QR kod ile ödeme yapın.</p>
+    <img src="@Model.QrCodeImageUrl" width="200" />
+</div>
+
+<div id="havaleSection" style="display:none; margin-top: 20px;">
+    <p>Banka Bilgileri:</p>
+    <p>Alıcı: D&R Müzik A.Ş.</p>
+    <p>IBAN: @Model.Iban</p>
+</div>
+
+<script>
+    const select = document.getElementById("PaymentOption");
+    const ccSection = document.getElementById("creditCardSection");
+    const qrSection = document.getElementById("qrSection");
+    const havaleSection = document.getElementById("havaleSection");
+
+    select.addEventListener("change", function () {
+        const val = this.value;
+        ccSection.style.display = val === "CreditCard" ? "block" : "none";
+        qrSection.style.display = val === "QR" ? "block" : "none";
+        havaleSection.style.display = val === "Havale" ? "block" : "none";
+    });
+</script>
